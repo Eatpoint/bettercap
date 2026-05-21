@@ -36,16 +36,18 @@ func Dot11Freq2Chan(freq int) int {
 	return 0
 }
 
-var dot11Channel5GHz = map[int]bool{
-	36: true, 40: true, 44: true, 48: true,
-	52: true, 56: true, 60: true, 64: true,
+var dot11Channel5GHz = map[int]struct{}{
+	36:  {}, 40:  {}, 44:  {}, 48:  {},
+	52:  {}, 56:  {}, 60:  {}, 64:  {},
 
-	100: true, 104: true, 108: true, 112: true,
-	116: true, 120: true, 124: true, 128: true,
-	132: true, 136: true, 140: true, 144: true,
+	68:  {}, 72:  {}, 76:  {}, 80:  {},
+	100: {}, 104: {}, 108: {}, 112: {},
 
-	149: true, 153: true, 157: true, 161: true,
-	165: true, 169: true, 173: true, 177: true,
+	116: {}, 120: {}, 124: {}, 128: {},
+	132: {}, 136: {}, 140: {}, 144: {},
+
+	149: {}, 153: {}, 157: {}, 161: {},
+	165: {}, 169: {}, 173: {}, 177: {},
 }
 
 func Dot11Chan2Freq(channel int) int {
@@ -57,7 +59,7 @@ func Dot11Chan2Freq(channel int) int {
 		return 2484
 	}
 
-	if dot11Channel5GHz[channel] {
+	if _, ok := dot11Channel5GHz[channel]; ok {
 		return ((channel - 7) * 5) + 5035
 	}
 	
